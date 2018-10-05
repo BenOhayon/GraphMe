@@ -1,10 +1,6 @@
 import math
 
 
-def parabola(x):
-    return x * x
-
-
 class DrawSettings(object):
 
     def __init__(self, range_size, color, options=None):
@@ -17,13 +13,14 @@ class DrawSettings(object):
             self._options = {'X^2': parabola,
                              'sin(x)': math.sin,
                              'cos(x)': math.cos,
-                             'tan(x)': math.tan}
+                             'tan(x)': math.tan,
+                             'e^x': math.exp}
 
     def set_color(self, color):
         self._color = color
 
-    def set_range(self, range_size):
-        self._range = range_size
+    def set_range(self, end, start=0):
+        self._range = range(start, end+1)
 
     def get_options(self):
         return self._options
@@ -33,3 +30,17 @@ class DrawSettings(object):
 
     def get_range(self):
         return self._range
+
+
+def parabola(x):
+    return x * x
+
+
+def calculate(x, func, draw_set: DrawSettings):
+    if func == parabola:
+        draw_set.set_range(start=-150, end=150)
+        y = func(x) / 120
+    else:
+        draw_set.set_range(start=-150, end=150)
+        y = func(x / 20) * 20
+    return y
